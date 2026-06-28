@@ -115,7 +115,8 @@ public class RobotContainer {
     if (currentGameMode == gameMode.Auto && autoDrive.getFollower() != null) {
       telemetry.addData("Auto Pose X", autoDrive.getFollower().getPose().getX());
       telemetry.addData("Auto Pose Y", autoDrive.getFollower().getPose().getY());
-      telemetry.addData("Auto Heading", Math.toDegrees(autoDrive.getFollower().getPose().getHeading()));
+      telemetry.addData(
+          "Auto Heading", Math.toDegrees(autoDrive.getFollower().getPose().getHeading()));
     } else if (currentGameMode == gameMode.TeleOp) {
       telemetry.addData("Robot Heading", drive.getBotHeading());
     }

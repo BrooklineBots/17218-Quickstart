@@ -71,9 +71,7 @@ public class Drivetrain extends SubsystemBase {
                 RevHubOrientationOnRobot.LogoFacingDirection.UP,
                 RevHubOrientationOnRobot.UsbFacingDirection.LEFT));
 
-    drive =
-        new MecanumDrive(
-            frontLeftMotor, frontRightMotor, backLeftMotor, backRightMotor);
+    drive = new MecanumDrive(frontLeftMotor, frontRightMotor, backLeftMotor, backRightMotor);
     if (gameMode == RobotContainer.gameMode.Auto) {
       follower = PedroConstants.createFollower(hwMap);
       telemetry.addData("Follower: ", "auto");

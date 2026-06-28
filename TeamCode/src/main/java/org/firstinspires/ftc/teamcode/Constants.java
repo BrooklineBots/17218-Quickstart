@@ -19,5 +19,4 @@ public class Constants {
 
     public static final String IMU_ID = "imu";
   }
-
 }
