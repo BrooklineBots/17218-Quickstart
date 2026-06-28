@@ -99,7 +99,6 @@ public class RobotContainer {
   }
 
   private void registerNamedCommands() {
-
     // TODO: Register commands
 
   }
@@ -122,7 +121,7 @@ public class RobotContainer {
     }
 
     // Add any dashboard drawing or bulk cache clearing here in the future
-    
+
     telemetry.update();
   }
 }
