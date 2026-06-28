@@ -16,8 +16,9 @@ public class PedroConstants {
   public static FollowerConstants followerConstants =
       new FollowerConstants()
           .mass(Constants.RobotConstants.ROBOT_MASS)
-          .forwardZeroPowerAcceleration(-28.368)
-          .lateralZeroPowerAcceleration(-54.4328)
+          // TODO: Tune these zero power acceleration values for your specific robot!
+          .forwardZeroPowerAcceleration(0.0)
+          .lateralZeroPowerAcceleration(0.0)
           .useSecondaryTranslationalPIDF(true)
           .useSecondaryHeadingPIDF(true)
           .useSecondaryDrivePIDF(true);
@@ -35,8 +36,9 @@ public class PedroConstants {
           .leftRearMotorDirection(DcMotorSimple.Direction.REVERSE)
           .rightFrontMotorDirection(DcMotorSimple.Direction.FORWARD)
           .rightRearMotorDirection(DcMotorSimple.Direction.FORWARD)
-          .xVelocity(60.2638)
-          .yVelocity(54.37);
+          // TODO: Tune these max velocity values for your specific robot!
+          .xVelocity(0.0)
+          .yVelocity(0.0);
 
   public static PinpointConstants localizerConstants =
       new PinpointConstants()
