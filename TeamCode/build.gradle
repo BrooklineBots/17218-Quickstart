@@ -1,3 +1,19 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        maven {
+            url "https://repo.dairy.foundation/releases"
+        }
+    }
+    dependencies {
+        classpath "dev.frozenmilk:Load:0.2.4"
+    }
+}
+
+plugins {
+    id 'com.diffplug.spotless' version '6.23.3'
+}
+
 //
 // build.gradle in TeamCode
 //
@@ -29,6 +45,9 @@ repositories {
     }
 
     maven {
+        url = 'https://maven.pedropathing.com'
+    }
+    maven {
         url = 'https://mymaven.bylazar.com/releases'
     }
 
@@ -36,8 +55,13 @@ repositories {
         url "https://repo.dairy.foundation/releases"
     }
 
+    // Fpr Snapshot/Beta Versions of SolversLib
     maven {
         url "https://repo.dairy.foundation/snapshots"
+    }
+
+    maven {
+        url 'https://jitpack.io'
     }
 }
 
@@ -45,18 +69,64 @@ dependencies {
     implementation project(':FtcRobotController')
     annotationProcessor files('lib/OpModeAnnotationProcessor.jar')
 
-    // SolversLib: Latest Stable Version
+    // SolversLib
+    implementation "org.solverslib:core:0.3.3" // core
+    implementation "org.solverslib:pedroPathing:0.3.3" // pedroPathing
 
-    implementation "org.solverslib:core:0.3.4" // core
-    implementation "org.solverslib:pedroPathing:0.3.4" // pedroPathing
-    //    implementation "org.solverslib:photon:0.3.4" // photon is optional (see docs for more info)
-
-    implementation "com.acmerobotics.dashboard:dashboard:0.5.1" // FTC Dashboard
+    implementation "com.acmerobotics.dashboard:dashboard:0.4.17" // FTC Dashboard
 
     // Pedro Pathing
     implementation 'com.pedropathing:ftc:2.0.6'
     implementation 'com.pedropathing:telemetry:1.0.0'
 
+    implementation 'com.github.Mallen220:PedroPathingPlus:1.1.1'
+
     // Panels Dashboard
-    implementation "com.bylazar:fullpanels:1.0.12"
+    implementation "com.bylazar:fullpanels:1.0.5"
+
+    //Sloth
+    implementation("dev.frozenmilk.sinister:Sloth:0.2.4")
+}
+
+spotless {
+    java {
+        target fileTree('.') {
+            include '**/*.java'
+            exclude '**/build/**', '**/build-*/**', '**/BuildConstants.java', '**/generated-sources/**'
+        }
+        toggleOffOn()
+        googleJavaFormat()
+        removeUnusedImports()
+        trimTrailingWhitespace()
+        endWithNewline()
+    }
+    groovyGradle {
+        target fileTree('.') {
+            include '**/*.gradle'
+            exclude '**/build/**', '**/build-*/**', '**/BuildConstants.java', '**/generated-sources/**'
+        }
+        greclipse()
+        indentWithSpaces(4)
+        trimTrailingWhitespace()
+        endWithNewline()
+    }
+    format 'xml', {
+        target fileTree('.') {
+            include '**/*.xml'
+            exclude '**/build/**', '**/build-*/**', '**/generated-sources/**'
+        }
+        eclipseWtp('xml')
+        trimTrailingWhitespace()
+        indentWithSpaces(2)
+        endWithNewline()
+    }
+    format 'misc', {
+        target fileTree('.') {
+            include '**/*.md', '**/.gitignore'
+            exclude '**/build/**', '**/build-*/**', '**/generated-sources/**'
+        }
+        trimTrailingWhitespace()
+        indentWithSpaces(2)
+        endWithNewline()
+    }
 }
