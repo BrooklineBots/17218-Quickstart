@@ -3,8 +3,10 @@ package org.firstinspires.ftc.teamcode;
 public class Constants {
 
   public static class RobotConstants {
-    public static final double ROBOT_MASS = 8.5; // in kilograms
+    // TODO: Update these values for your robot!
+    public static final double ROBOT_MASS = 10.0; // in kilograms
     // pinpoint constants
+    // TODO: Update these values for your robot!
     public static final double FORWARD_POD_OFFSET = 3.125;
     public static final double STRAFE_POD_OFFSET = -1.625;
   }
