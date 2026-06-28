@@ -36,8 +36,6 @@ public class RobotContainer {
     DoNothingAuto
   }
 
-  private AutoMode currentAuto;
-
   public RobotContainer(
       final HardwareMap hardwareMap,
       final Gamepad gamepad1,
@@ -72,7 +70,7 @@ public class RobotContainer {
     configureButtonBindings();
   }
 
-  public void configureAuto() { // Note that I'm still working on this. It does not work yet.
+  public void configureAuto() {
     currentGameMode = gameMode.Auto;
     initializeSubsystems();
     registerNamedCommands();
@@ -107,30 +105,24 @@ public class RobotContainer {
   }
 
   public void run() {
-    // telemetry`
-    // telemetry.addData("Currently shooting", outtake.getPower());
-    //    telemetry.update();
-
     if (currentGameMode == gameMode.TeleOp) {
       gamepad1.readButtons();
       gamepad2.readButtons();
     }
-    if (currentGameMode == gameMode.Auto) {
-      //      telemetry.addData("Pos x", autoDrive.getFollower().getPose().getX());
-      //      telemetry.addData("Pos y", autoDrive.getFollower().getPose().getY());
-      //      telemetry.addData("Heading: ", autoDrive.getFollower().getPose().getHeading());
+
+    // Smart Telemetry Logging
+    telemetry.addData("Current Mode", currentGameMode);
+
+    if (currentGameMode == gameMode.Auto && autoDrive.getFollower() != null) {
+      telemetry.addData("Auto Pose X", autoDrive.getFollower().getPose().getX());
+      telemetry.addData("Auto Pose Y", autoDrive.getFollower().getPose().getY());
+      telemetry.addData("Auto Heading", Math.toDegrees(autoDrive.getFollower().getPose().getHeading()));
+    } else if (currentGameMode == gameMode.TeleOp) {
+      telemetry.addData("Robot Heading", drive.getBotHeading());
     }
-    //    if (currentGameMode == gameMode.Auto) {
-    //      dashboardPoseTracker.update();
-    //      Drawing.drawPoseHistory(dashboardPoseTracker, "#4CAF50");
-    //      Drawing.drawRobot(robot.follower.getPose(), "#4CAF50");
-    //      Drawing.sendPacket();
-    //
-    //      // DO NOT REMOVE! Removing this will return stale data since bulk caching is on Manual
-    // mode
-    //      // Also only clearing the control hub to decrease loop times
-    //      // This means if we start reading both hubs (which we aren't) we need to clear both
-    //      robot.ControlHub.clearBulkCache();
-    //    }
+
+    // Add any dashboard drawing or bulk cache clearing here in the future
+    
+    telemetry.update();
   }
 }

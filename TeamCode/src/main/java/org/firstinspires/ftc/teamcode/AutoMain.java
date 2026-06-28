@@ -30,9 +30,6 @@ public class AutoMain extends CommandOpMode {
   public void run() {
     CommandScheduler.getInstance().run();
     robotContainer.run();
-
-    // Debug: show scheduled commands
-    //      telemetry.addData("Scheduled Commands", CommandScheduler.getInstance().);
     telemetry.update();
   }
 }

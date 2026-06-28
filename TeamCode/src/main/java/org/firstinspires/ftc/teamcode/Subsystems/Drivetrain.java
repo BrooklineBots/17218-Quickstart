@@ -51,13 +51,10 @@ public class Drivetrain extends SubsystemBase {
     frontRightMotor = new Motor(hwMap, Constants.DriveConstants.FRONT_RIGHT_MOTOR_ID);
     backRightMotor = new Motor(hwMap, Constants.DriveConstants.BACK_RIGHT_MOTOR_ID);
 
-    frontLeftMotor.setInverted(false); // Invert this motor!
-    backLeftMotor.setInverted(false); // Invert this motor!
+    frontLeftMotor.setInverted(false);
+    backLeftMotor.setInverted(false);
 
-    frontLeftMotor.setRunMode(
-        Motor.RunMode
-            .VelocityControl); // Set the run mode for the motors! Read the docs if you don't know
-    // what this is or what to do here!
+    frontLeftMotor.setRunMode(Motor.RunMode.VelocityControl);
     frontRightMotor.setRunMode(Motor.RunMode.VelocityControl);
     backLeftMotor.setRunMode(Motor.RunMode.VelocityControl);
     backRightMotor.setRunMode(Motor.RunMode.VelocityControl);
@@ -65,9 +62,8 @@ public class Drivetrain extends SubsystemBase {
     // Retrieve the IMU from the hardware map
     revIMU = new RevIMU(hwMap, Constants.DriveConstants.IMU_ID); // Constants.DriveConstants.IMU_ID
 
-    revIMU.init(); // FIXME: The orientation is very likely wrong. Needs tested.
+    revIMU.init(); // FIXME: Orientation may need to be adjusted for your robot
 
-    /* Old parameters settings */
     // Adjust the orientation parameters to match your robot
     final IMU.Parameters parameters =
         new IMU.Parameters(
@@ -77,7 +73,7 @@ public class Drivetrain extends SubsystemBase {
 
     drive =
         new MecanumDrive(
-            frontLeftMotor, frontRightMotor, backLeftMotor, backRightMotor); // Read the docs
+            frontLeftMotor, frontRightMotor, backLeftMotor, backRightMotor);
     if (gameMode == RobotContainer.gameMode.Auto) {
       follower = PedroConstants.createFollower(hwMap);
       telemetry.addData("Follower: ", "auto");
