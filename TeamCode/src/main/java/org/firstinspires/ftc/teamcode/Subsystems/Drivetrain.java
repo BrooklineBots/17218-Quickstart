@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.Subsystems;
 
 import com.pedropathing.follower.Follower;
 import com.pedropathing.ftc.localization.localizers.PinpointLocalizer;
+import com.pedropathing.geometry.Pose;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
@@ -11,8 +12,10 @@ import com.seattlesolvers.solverslib.gamepad.GamepadEx;
 import com.seattlesolvers.solverslib.hardware.RevIMU;
 import com.seattlesolvers.solverslib.hardware.motors.Motor;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 import org.firstinspires.ftc.teamcode.Constants;
 import org.firstinspires.ftc.teamcode.RobotContainer;
+import org.firstinspires.ftc.teamcode.Utils.Utils;
 import org.firstinspires.ftc.teamcode.pedroPathing.PedroConstants;
 
 public class Drivetrain extends SubsystemBase {
@@ -65,11 +68,10 @@ public class Drivetrain extends SubsystemBase {
     revIMU.init(); // FIXME: Orientation may need to be adjusted for your robot
 
     // Adjust the orientation parameters to match your robot
-    final IMU.Parameters parameters =
-        new IMU.Parameters(
-            new RevHubOrientationOnRobot(
-                RevHubOrientationOnRobot.LogoFacingDirection.UP,
-                RevHubOrientationOnRobot.UsbFacingDirection.LEFT));
+    final IMU.Parameters parameters = new IMU.Parameters(
+        new RevHubOrientationOnRobot(
+            RevHubOrientationOnRobot.LogoFacingDirection.UP,
+            RevHubOrientationOnRobot.UsbFacingDirection.LEFT));
 
     drive = new MecanumDrive(frontLeftMotor, frontRightMotor, backLeftMotor, backRightMotor);
     if (gameMode == RobotContainer.gameMode.Auto) {
@@ -129,8 +131,30 @@ public class Drivetrain extends SubsystemBase {
     return follower;
   }
 
+  // Update PedroPathing Pose Only
+  public void updatePoseFromLimelight(Limelight limelight) {
+    Pose3D visionPose = limelight.getBotPose();
+    if (visionPose != null) {
+      // Limelight is in meters, PedroPathing (is dumb) and uses inches.
+      double xInches = Utils.metersToInches(visionPose.getPosition().x);
+      double yInches = Utils.metersToInches(visionPose.getPosition().y);
+      double heading = Math.toRadians(visionPose.getOrientation().getYaw());
+
+      Pose newPose = new Pose(xInches, yInches, heading);
+
+      if (follower != null) {
+        follower.setPose(newPose);
+      } else if (pinpoint != null) {
+        pinpoint.setPose(newPose);
+      }
+    } else {
+      System.out.println("No pose from Limelight");
+    }
+  }
+
   @Override
   public void periodic() {
-    if (follower != null) follower.update();
+    if (follower != null)
+      follower.update();
   }
 }

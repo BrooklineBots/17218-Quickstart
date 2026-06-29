@@ -19,4 +19,12 @@ public class Utils {
   private static double rpmToRadPerSec(double rpm) {
     return rpm * (2 * Math.PI / 60);
   }
+
+  public static double metersToInches(final double meters) {
+    return meters * 39.3701;
+  }
+
+  public static double inchesToMeters(final double inches) {
+    return inches / 39.3701;
+  }
 }
