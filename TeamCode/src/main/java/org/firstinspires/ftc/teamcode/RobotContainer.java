@@ -7,9 +7,11 @@ import com.seattlesolvers.solverslib.command.CommandOpMode;
 import com.seattlesolvers.solverslib.command.CommandScheduler;
 import com.seattlesolvers.solverslib.command.InstantCommand;
 import com.seattlesolvers.solverslib.gamepad.GamepadEx;
+import com.seattlesolvers.solverslib.gamepad.GamepadKeys;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Commands.AutoCommands.AutoChooser;
 import org.firstinspires.ftc.teamcode.Commands.DriveCommand;
+import org.firstinspires.ftc.teamcode.Commands.LimelightAlignCommand;
 import org.firstinspires.ftc.teamcode.Subsystems.Drivetrain;
 import org.firstinspires.ftc.teamcode.Subsystems.Limelight;
 
@@ -84,6 +86,9 @@ public class RobotContainer {
 
   private void configureButtonBindings() {
     // TODO: Gamepad 1 buttons
+    gamepad1
+        .getGamepadButton(GamepadKeys.Button.A)
+        .whenPressed(new LimelightAlignCommand(drive, limelight, gamepad1));
 
     // TODO: gamepad2
 
