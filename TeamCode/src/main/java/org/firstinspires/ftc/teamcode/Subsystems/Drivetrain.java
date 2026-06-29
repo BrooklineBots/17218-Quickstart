@@ -68,10 +68,11 @@ public class Drivetrain extends SubsystemBase {
     revIMU.init(); // FIXME: Orientation may need to be adjusted for your robot
 
     // Adjust the orientation parameters to match your robot
-    final IMU.Parameters parameters = new IMU.Parameters(
-        new RevHubOrientationOnRobot(
-            RevHubOrientationOnRobot.LogoFacingDirection.UP,
-            RevHubOrientationOnRobot.UsbFacingDirection.LEFT));
+    final IMU.Parameters parameters =
+        new IMU.Parameters(
+            new RevHubOrientationOnRobot(
+                RevHubOrientationOnRobot.LogoFacingDirection.UP,
+                RevHubOrientationOnRobot.UsbFacingDirection.LEFT));
 
     drive = new MecanumDrive(frontLeftMotor, frontRightMotor, backLeftMotor, backRightMotor);
     if (gameMode == RobotContainer.gameMode.Auto) {
@@ -154,7 +155,6 @@ public class Drivetrain extends SubsystemBase {
 
   @Override
   public void periodic() {
-    if (follower != null)
-      follower.update();
+    if (follower != null) follower.update();
   }
 }
